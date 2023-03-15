@@ -13,7 +13,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        console.log(firebaseContext.isLoggedIn)
+        // console.log(firebaseContext.isLoggedIn)
         if (firebaseContext.isLoggedIn){
           navigate('/')
         }

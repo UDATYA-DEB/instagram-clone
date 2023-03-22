@@ -33,6 +33,7 @@ const Home = () => {
 
     firebaseContext.fetchPosts()
     .then((post)=>{
+      // console.log(post.docs[1]._key.path.segments[6])
       setPosts(post.docs.sort(sortArrayByUploadDate))
     })   
   },[firebaseContext])
@@ -57,7 +58,10 @@ const Home = () => {
           <div>{
             posts.length === 0 ? <h4 style={{marginTop: '200px'}}>No posts available...</h4> : <div>{
               posts.map((post, index)=>{
-                return <div style={{margin: '15px 0'}} key={index}><PostCard {...post.data()}/></div>
+                // console.log(post._key.path.segments[6])
+                // console.log(post.docs[1]._key.path.segments[6])
+                // console.log({...post.data()})
+                return <div style={{margin: '15px 0'}} key={index}><PostCard postNum={post._key.path.segments[6]} {...post.data()}/></div>
               })  
             }</div>  
           }</div>

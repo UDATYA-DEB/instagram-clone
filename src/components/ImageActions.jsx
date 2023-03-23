@@ -7,14 +7,6 @@ import { AiFillHeart } from 'react-icons/ai'
 
 const ImageActions = ({isLiked, like, handleLike}) => {
 
-    // const handleLike = ()=>{
-    //     if (!isLiked){
-    //         setLike(like+1)
-    //     } else {
-    //         setLike(like-1)
-    //     }
-    //     setIsLiked(!isLiked)
-    // }
   return (
     <div>
         <div style={{margin: '10px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '25px'}}>
@@ -25,7 +17,7 @@ const ImageActions = ({isLiked, like, handleLike}) => {
             </div>
             <RiBookmarkLine size={27} style={{cursor: 'pointer'}}/>
         </div>
-        <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>
+        {like != 0 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>}
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { getAuth,
         getAdditionalUserInfo } from 'firebase/auth'
 import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc } from 'firebase/firestore'
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
-// import { useNavigate } from "react-router-dom";
+
 
 const firebaseContext = createContext(null);
 const adminEmail = "udatya.developer@gmail.com"
@@ -49,18 +49,9 @@ export const FirebaseProvider = (props)=>{
     const [imageUrl, setImageUrl] = useState('')
     const [currentUser, setCurrentUser] = useState({uname: '', email: '', dp: ''})
     const [noPost, setNoPost] = useState(0)
-    // const navigate = useNavigate();
-    // console.log(currentUser)
-    // user && user.displayName && console.log(user.photoURL)
-    // const uploadedImageUrl = (url)=>{
-    //     setImageUrl(url)
-    // }
-    // user && console.log(user.displayName === null)
 
     useEffect(()=>{
-        if ( user && user.displayName ){
-            setCurrentUser({uname: user.displayName, email: user.email, dp: user.photoURL})
-        } else if (user){
+        if (user){
             fetchUserDetails(user.email);
         }
     },[user])

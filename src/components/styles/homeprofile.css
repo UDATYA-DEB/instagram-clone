@@ -1,0 +1,11 @@
+.home-profile-dp{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+p{
+    padding: 0;
+    margin: 0;
+}

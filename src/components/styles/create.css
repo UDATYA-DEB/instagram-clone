@@ -1,3 +1,4 @@
+.create-modal-add-caption,
 .create-modal{
     position: absolute;
     top: 50%;
@@ -8,6 +9,16 @@
     background-color: white;
     border: none;
     border-radius: 15px;
+}
+
+.closeicon{
+    position: absolute;
+    margin: 20px;
+    transform: translate(-50%, -50%);
+    color: white;
+    border: none;
+    right: 0;
+    cursor: pointer;
 }
 
 .create-modal:focus{
@@ -42,15 +53,8 @@
 }
 
 .create-modal-add-caption{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 850px;
     height: 555px;
-    background-color: white;
-    border: none;
-    border-radius: 15px;
 }
 
 .create-mid-caption{

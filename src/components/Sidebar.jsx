@@ -63,7 +63,7 @@ const Sidebar = () => {
                     <label>Create</label>
                 </div>
                 <Link to={'/profile'} style={{color: 'black'}} className='menu-items'>
-                    <img src={firebaseContext.user ? firebaseContext.currentUser.dp ? firebaseContext.currentUser.dp : dpLoader : dpLoader} alt="olga" className="dp" />
+                    <img src={firebaseContext.user ? firebaseContext.currentUser.dp ? firebaseContext.currentUser.dp : dpLoader : dpLoader} alt="userdp" className="dp" />
                     <label>Profile</label>
                 </Link>
             </div>
@@ -86,8 +86,8 @@ const Sidebar = () => {
         }}
       >
         <Fade in={open}>
-          <div className='create-modal-container'>
-            <CloseIcon style={{color: 'white'}}/>
+          <div>
+            <CloseIcon className='closeicon' onClick={handleClose}/>
             {
               firebaseContext.imageUrl ? <div className='create-modal-add-caption'>
               <Create />

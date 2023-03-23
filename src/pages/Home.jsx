@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar';
 import { useFirebase } from '../context/firebase';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import PostCard from '../components/PostCard';
+import HomeProfile from '../components/HomeProfile';
 
 const Home = () => {
 
@@ -49,23 +50,28 @@ const Home = () => {
   // }
     
   return (
-    <div className='App' style={{width: '1070px'}}>
-        <Sidebar />
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', marginLeft: '350px'}}>
-          <div>
-          <Button style={{marginTop: '20px'}} variant='danger' onClick={()=>firebaseContext.userLogOut()}>Log Out</Button>
-          </div>
-          <div>{
-            posts.length === 0 ? <h4 style={{marginTop: '200px'}}>No posts available...</h4> : <div>{
-              posts.map((post, index)=>{
-                // console.log(post._key.path.segments[6])
-                // console.log(post.docs[1]._key.path.segments[6])
-                // console.log({...post.data()})
-                return <div style={{margin: '15px 0'}} key={index}><PostCard postNum={post._key.path.segments[6]} {...post.data()}/></div>
-              })  
-            }</div>  
-          }</div>
+    <div style={{width: '100%', display: 'flex'}}>
+      <Sidebar />
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'flex-end', width: '2420px', marginLeft: '0px'}}>
+        <div>
+        {/* <Button style={{marginTop: '20px'}} variant='danger' onClick={()=>firebaseContext.userLogOut()}>Log Out</Button> */}
         </div>
+        <div>{
+          posts.length === 0 ? <h4 style={{marginTop: '200px'}}>No posts available...</h4> : <div>{
+            posts.map((post, index)=>{
+              // console.log(post._key.path.segments[6])
+              // console.log(post.docs[1]._key.path.segments[6])
+              // console.log({...post.data()})
+              return <div style={{margin: '15px 0'}} key={index}><PostCard postNum={post._key.path.segments[6]} {...post.data()}/></div>
+            })  
+          }</div>  
+        }</div>
+      </div>
+      <div style={{width: '100%'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <HomeProfile />
+        </div>
+      </div>
     </div>
   )
 }

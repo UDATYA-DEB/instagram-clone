@@ -8,7 +8,7 @@ import { getAuth,
         signInWithPopup, 
         signInWithEmailAndPassword,
         getAdditionalUserInfo } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 
@@ -31,7 +31,7 @@ const firebaseConfig = {
     storageBucket: "instagram-beta-f4791.appspot.com",
     messagingSenderId: "504052711345",
     appId: "1:504052711345:web:4a37a041d9dc72ec61c790"
-}; // insta-for-users
+}; // insta-for-public
 
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase)
@@ -135,6 +135,7 @@ export const FirebaseProvider = (props)=>{
         var dpUrl = ''
         // console.log(snapshot)
         snapshot.forEach((data)=>{
+            // console.log(data)
             dpUrl = data.data().dp
         })
         
@@ -152,6 +153,56 @@ export const FirebaseProvider = (props)=>{
         return getDownloadURL(ref(storage, path))
     }
 
+    const updateLikeInFirestore = (docId)=>{
+        // getDocs(collection(firestore, `posts/${docId}/likes`))
+        // .then((likeDocid)=>{
+        //     const docRef = doc(firestore, `posts/${docId}/likes`, docId)
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
+        addDoc(collection(firestore, `posts/${docId}/likes`),{
+            uid: user.uid,
+            userEmail: currentUser.email,
+            userName: currentUser.uname,
+            likeDate: Date.now()
+        }).then((docRef)=>{
+            // console.log(docRef)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+
+    const deleteLikeFromFirestore = async({postNum, likeId})=>{
+        await deleteDoc(doc(firestore, `posts/${postNum}/likes`, likeId))
+        console.log('done')
+    }
+
+    const userLikedCheck = async({email, postId})=>{
+        // console.log(email)
+        // console.log(user.displayName)
+        const collectionRef = collection(firestore, `posts/${postId}/likes`)
+        const q = query(collectionRef, where('userEmail','==', email))
+        console.log(q)
+        const snapshot = await getDocs(q)
+        
+        // var dpUrl = ''
+        // console.log(snapshot)
+        var checker = null
+        snapshot.forEach((data)=>{
+            // dpUrl = data.data()
+            // console.log('eh')
+            // console.log(data.data())
+            checker = data._key.path.segments[8]
+            // return true
+        })
+
+        return checker
+    }
+
+    const fetchLikes = (docId)=>{
+        return getDocs(collection(firestore, `posts/${docId}/likes`))
+    }
+
     const postUploadToFirebase = (caption)=>{
         addDoc(collection(firestore, 'posts'), {
             caption,
@@ -162,7 +213,6 @@ export const FirebaseProvider = (props)=>{
             uploadDate: Date.now()
         }).then((docRef)=>{
             window.location.reload()
-            // console.log(docRef)
         }).catch((err)=>{
             alert(err)
         })
@@ -192,7 +242,7 @@ export const FirebaseProvider = (props)=>{
 
     const isLoggedIn = user ? true : false;
 
-    return <firebaseContext.Provider value={{adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
+    return <firebaseContext.Provider value={{deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
         {props.children}
     </firebaseContext.Provider>
 }

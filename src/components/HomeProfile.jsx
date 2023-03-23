@@ -14,10 +14,22 @@ const HomeProfile = () => {
                 <div style={{marginLeft: '16px'}}>
                     <p style={{fontSize: '14px', fontWeight: '600'}}>{firebaseContext.currentUser.uname}</p>
                     <p style={{fontSize: '14px', color: '#8e8e8e'}}>{firebaseContext.currentUser.fname}</p>
-                    {console.log(firebaseContext.currentUser)}
+                    {/* {console.log(firebaseContext.currentUser)} */}
                 </div>
             </div>
             <p style={{fontSize: '12px', color: '#0095f6', fontWeight: '600', cursor: 'pointer'}} onClick={()=>{firebaseContext.userLogOut()}}>Switch</p>
+        </div>
+        <div style={{display: 'flex', fontSize: '12px', color: '#c7c7c7', flexWrap: 'inherit'}}>
+            {/* <div><label style={{marginRight: '5px'}}>About</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Help</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Press</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>API</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Jobs</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Privacy</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Terms</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Locations</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Languages</label>&#x2022;</div>
+            <div><label style={{marginRight: '5px', marginLeft: '5px'}}>Meta Verified</label>&#x2022;</div> */}
         </div>
     </div>
   )

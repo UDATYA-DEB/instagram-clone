@@ -12,3 +12,15 @@
     align-items: center;
     padding: 10px;
 }
+
+.comment{
+    border: none;
+    margin-bottom: 10px;
+    height: 20px;
+    font-size: 14px;
+    width: 415px;
+}
+
+.comment:focus{
+    outline: none;
+}

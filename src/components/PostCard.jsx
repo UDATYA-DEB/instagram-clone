@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useFirebase } from '../context/firebase';
-import { AiOutlineHeart } from 'react-icons/ai'
-import { TbMessageCircle2 } from 'react-icons/tb'
-import { RiBookmarkLine } from 'react-icons/ri'
-import { FiSend } from 'react-icons/fi'
 import './styles/logo.css'
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
+import { GrEmoji } from 'react-icons/gr'
 import './styles/post.css'
+import ImageActions from './ImageActions';
 
 
 const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
@@ -24,6 +22,10 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [comment, setComment] = useState('')
+    const [like, setLike] = useState(0)
+    const [isLiked, setIsLiked] = useState(false)
+    const [likeId, setLikeId] = useState(null)
 
     useEffect(()=>{
       firebaseContext.fetchPostDp(userEmail)
@@ -33,14 +35,50 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
     }, [firebaseContext,userEmail])
 
     useEffect(()=>{
-        firebaseContext.getImage(imageURL)
-        .then((url)=>setImgURL(url))
-      },[firebaseContext,imageURL])
+      firebaseContext.getImage(imageURL)
+      .then((url)=>setImgURL(url))
+    },[firebaseContext,imageURL])
+
+    useEffect(()=>{
+      firebaseContext.fetchLikes(postNum)
+      .then((resp)=>{
+        // console.log(resp.docs.length)
+        setLike(resp.docs.length)
+        didUserLiked()
+      })
+    },[])
+
+    useEffect(()=>{
+      // console.log(likeId)
+      likeId ? setIsLiked(true) : setIsLiked(false)
+    }, [likeId])
 
     const handleDelete = ()=>{
       // console.log('deleting post with doc id: ',postNum)
       firebaseContext.deletePost({imageURL, postNum})
-    }  
+    }
+
+    const didUserLiked = async()=>{
+      setLikeId(await firebaseContext.userLikedCheck({email: firebaseContext.currentUser.email, postId: postNum}))
+      // console.log(likeId)
+      // likeId ? setIsLiked(true) : setIsLiked(false)
+    }
+    
+    const handleComment = (e)=>{
+      e.preventDefault()
+      setComment(e.target.value)
+    }
+
+    const handleLike = ()=>{
+      if (!isLiked){
+          setLike(like+1)
+          firebaseContext.updateLikeInFirestore(postNum)
+      } else {
+          setLike(like-1)
+          firebaseContext.deleteLikeFromFirestore({postNum, likeId})
+      }
+      setIsLiked(!isLiked)
+  }
 
     return (
         <Card style={{ width: '469px', border: 'none', borderBottom: '1px solid #dbdbdb', borderRadius: '0'}}>
@@ -53,19 +91,16 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
               <img src="./images/meatball-menu.webp" alt="menu" style={{objectFit: 'cover', height: '20px', width: '20px', cursor: 'pointer'}}/>
             </div>
           </div>
-          <Card.Img variant="top" src={imgURL ? imgURL : dpLoader} style={{borderRadius: '4px', maxHeight: '563px', objectFit: 'cover', objectPosition: 'top'}} />
-          <div style={{margin: '10px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '25px'}}>
-            <div style={{display: 'flex', alignItems: 'center', width: '110px', justifyContent: 'space-between'}}>
-              <AiOutlineHeart size={27} style={{cursor: 'pointer'}}/>
-              <TbMessageCircle2 style={{WebkitTransform: 'scaleX(-1)', transform: 'scaleX(-1)', cursor: 'pointer'}} size={27}/>
-              <FiSend size={27} style={{cursor: 'pointer'}}/>
-            </div>
-            <RiBookmarkLine size={27} style={{cursor: 'pointer'}}/>
-          </div>
-          <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>0 likes</p>
+          <Card.Img onDoubleClick={handleLike} variant="top" src={imgURL ? imgURL : dpLoader} style={{borderRadius: '4px', maxHeight: '563px', objectFit: 'cover', objectPosition: 'top'}} />
+          <ImageActions like={like} isLiked={isLiked} handleLike={handleLike}/>
           <Card.Body style={{paddingBottom: '15px', paddingLeft: '0'}}>
             <p style={{fontSize: '14px'}}><span style={{fontWeight: '600'}}>{userName}</span> {caption}</p>
           </Card.Body>
+          <div>
+            <input value={comment} className='comment' type="text" onChange={(e)=>handleComment(e)} placeholder='Add a comment...'/>
+            {comment ? <label style={{marginRight: '6px', fontWeight: '600', fontSize: '14px', color: '#0095f6', cursor: 'pointer'}}>Post</label> : <label style={{marginRight: '6px', fontWeight: '600', fontSize: '14px', color: '#ffffff'}}>Post</label>}
+            <GrEmoji />
+          </div>
           <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

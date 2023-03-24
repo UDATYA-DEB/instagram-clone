@@ -182,7 +182,7 @@ export const FirebaseProvider = (props)=>{
         // console.log(user.displayName)
         const collectionRef = collection(firestore, `posts/${postId}/likes`)
         const q = query(collectionRef, where('userEmail','==', email))
-        console.log(q)
+        // console.log(q)
         const snapshot = await getDocs(q)
         
         // var dpUrl = ''

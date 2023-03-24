@@ -59,8 +59,8 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
     }
 
     const didUserLiked = async()=>{
-      setLikeId(await firebaseContext.userLikedCheck({email: firebaseContext.currentUser.email, postId: postNum}))
-      // console.log(likeId)
+      const likeRef = await firebaseContext.userLikedCheck({email: firebaseContext.currentUser.email, postId: postNum})
+      setLikeId(likeRef)
       // likeId ? setIsLiked(true) : setIsLiked(false)
     }
     

@@ -6,7 +6,7 @@ import { FiSend } from 'react-icons/fi'
 import { AiFillHeart } from 'react-icons/ai'
 
 const ImageActions = ({isLiked, like, handleLike}) => {
-
+  console.log(isLiked)
   return (
     <div>
         <div style={{margin: '10px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '25px'}}>
@@ -17,7 +17,9 @@ const ImageActions = ({isLiked, like, handleLike}) => {
             </div>
             <RiBookmarkLine size={27} style={{cursor: 'pointer'}}/>
         </div>
-        {like != 0 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>}
+        {/* {like === 0 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600', color: 'white'}}>{like} like</p>} */}
+        {like === 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} like</p>}
+        {like > 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>}
     </div>
   )
 }

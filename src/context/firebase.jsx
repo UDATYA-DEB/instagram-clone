@@ -192,6 +192,11 @@ export const FirebaseProvider = (props)=>{
         console.log('done')
     }
 
+    const deleteCommentFromFirestore = async(commentPath)=>{
+        await deleteDoc(doc(firestore, `posts/${commentPath[6]}/comments`, commentPath[8]))
+        window.location.reload()
+    }
+
     const userLikedCheck = async({email, postId})=>{
         // console.log(email)
         // console.log(user.displayName)
@@ -261,7 +266,7 @@ export const FirebaseProvider = (props)=>{
 
     const isLoggedIn = user ? true : false;
 
-    return <firebaseContext.Provider value={{fetchComments, postCommentHandler, deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
+    return <firebaseContext.Provider value={{deleteCommentFromFirestore, fetchComments, postCommentHandler, deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
         {props.children}
     </firebaseContext.Provider>
 }

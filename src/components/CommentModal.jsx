@@ -96,7 +96,7 @@ const CommentModal = ({setNewCommentArray, newCommentArray, menuOpener, setOpenC
                         <div className='dp-middle-uname-container'>
                             <img className='dp' src={postDp} alt="dp" />
                             <div>
-                                <p style={{margin: '0', padding: '0', marginLeft: '16px'}}><span style={{margin: '0', padding: '0', fontWeight: '700'}}>{userName}</span> {caption}</p>
+                                <p style={{margin: '0', padding: '0', marginLeft: '16px', fontSize: '14px'}}><span style={{margin: '0', padding: '0', fontWeight: '600'}}>{userName}</span> {caption}</p>
                             </div>
                         </div>{
                             newCommentArray.slice(0).reverse().map((newComm, index)=>{
@@ -106,7 +106,7 @@ const CommentModal = ({setNewCommentArray, newCommentArray, menuOpener, setOpenC
                         <div>{
                             comments.map((comm, index)=>{
                                 // console.log(comm.data())
-                                return <div key={index}><Commenters comm={comm.data()}/></div>
+                                return <div key={index}><Commenters commentPath={comm._key.path.segments} comm={comm.data()}/></div>
                             })  
                         }</div>
                     </div>

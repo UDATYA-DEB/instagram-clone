@@ -35,7 +35,6 @@ const ImageActions = ({setNewCommentArray, newCommentArray, menuOpener, setOpenC
             </div>
             <RiBookmarkLine size={27} style={{cursor: 'pointer'}}/>
         </div>
-        {/* {like === 0 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600', color: 'white'}}>{like} like</p>} */}
         {like === 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} like</p>}
         {like > 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>}
         <CommentModal setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={menuOpener} setOpenCommentFromPost={setOpenCommentFromPost} setCommentCount={setCommentCount} newComment={newComment} postNum={postNum} open={open} setOpen={setOpen} imgURL={imgURL} postDp={postDp} userName={userName} caption={caption} isLiked={isLiked} handleLike={handleLike} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>

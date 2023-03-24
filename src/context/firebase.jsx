@@ -15,23 +15,23 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'fire
 const firebaseContext = createContext(null);
 const adminEmail = "udatya.developer@gmail.com"
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDWcOmSGhs7rjRh1u0nkjfnF4Iwd07kX0E",
-    authDomain: "instagram-87c95.firebaseapp.com",
-    projectId: "instagram-87c95",
-    storageBucket: "instagram-87c95.appspot.com",
-    messagingSenderId: "864345540422",
-    appId: "1:864345540422:web:0006de6d8ccb6378878747"
-}; // insta-for-me
-
 // const firebaseConfig = {
-//     apiKey: "AIzaSyC9K6IqaXISk7EJ8xsEvVr99_viiEi--Lg",
-//     authDomain: "instagram-beta-f4791.firebaseapp.com",
-//     projectId: "instagram-beta-f4791",
-//     storageBucket: "instagram-beta-f4791.appspot.com",
-//     messagingSenderId: "504052711345",
-//     appId: "1:504052711345:web:4a37a041d9dc72ec61c790"
-// }; // insta-for-public
+//     apiKey: "AIzaSyDWcOmSGhs7rjRh1u0nkjfnF4Iwd07kX0E",
+//     authDomain: "instagram-87c95.firebaseapp.com",
+//     projectId: "instagram-87c95",
+//     storageBucket: "instagram-87c95.appspot.com",
+//     messagingSenderId: "864345540422",
+//     appId: "1:864345540422:web:0006de6d8ccb6378878747"
+// }; // insta-for-me
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC9K6IqaXISk7EJ8xsEvVr99_viiEi--Lg",
+    authDomain: "instagram-beta-f4791.firebaseapp.com",
+    projectId: "instagram-beta-f4791",
+    storageBucket: "instagram-beta-f4791.appspot.com",
+    messagingSenderId: "504052711345",
+    appId: "1:504052711345:web:4a37a041d9dc72ec61c790"
+}; // insta-for-public
 
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase)
@@ -192,6 +192,11 @@ export const FirebaseProvider = (props)=>{
         console.log('done')
     }
 
+    const deleteCommentFromFirestore = async(commentPath)=>{
+        await deleteDoc(doc(firestore, `posts/${commentPath[6]}/comments`, commentPath[8]))
+        window.location.reload()
+    }
+
     const userLikedCheck = async({email, postId})=>{
         // console.log(email)
         // console.log(user.displayName)
@@ -261,7 +266,7 @@ export const FirebaseProvider = (props)=>{
 
     const isLoggedIn = user ? true : false;
 
-    return <firebaseContext.Provider value={{fetchComments, postCommentHandler, deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
+    return <firebaseContext.Provider value={{deleteCommentFromFirestore, fetchComments, postCommentHandler, deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
         {props.children}
     </firebaseContext.Provider>
 }

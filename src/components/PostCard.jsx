@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useFirebase } from '../context/firebase';
 import './styles/logo.css'
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import CloseIcon from '@mui/icons-material/Close';
-import { GrEmoji } from 'react-icons/gr'
 import './styles/post.css'
 import ImageActions from './ImageActions';
-
+import Comment from './Comment';
+import PostMenuModal from './PostMenuModal';
 
 const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
   // console.log(imageURL)
@@ -19,13 +14,17 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
     const [imgURL, setImgURL] = useState('')
     const [postDp, setPostDp] = useState('')
     const dpLoader = './images/default_img.webp'
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     const [comment, setComment] = useState('')
     const [like, setLike] = useState(0)
     const [isLiked, setIsLiked] = useState(false)
     const [likeId, setLikeId] = useState(null)
+    const [open, setOpen] = useState(false);
+    const [newComment, setNewComment] = useState('')
+    const [newCommentArray, setNewCommentArray] = useState([])
+    const [commentCount, setCommentCount] = useState(0)
+    // console.log(commentCount)
+    const [openCommentFromPost, setOpenCommentFromPost] = useState(false)
+    
 
     useEffect(()=>{
       firebaseContext.fetchPostDp(userEmail)
@@ -46,17 +45,18 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
         setLike(resp.docs.length)
         didUserLiked()
       })
-    },[])
+    },[firebaseContext, postNum])
 
     useEffect(()=>{
       // console.log(likeId)
       likeId ? setIsLiked(true) : setIsLiked(false)
     }, [likeId])
 
-    const handleDelete = ()=>{
-      // console.log('deleting post with doc id: ',postNum)
-      firebaseContext.deletePost({imageURL, postNum})
-    }
+    useEffect(()=>{
+      setCommentCount(commentCount+1)
+    }, [newComment])
+
+    // console.log(comments && comments[1].data())
 
     const didUserLiked = async()=>{
       const likeRef = await firebaseContext.userLikedCheck({email: firebaseContext.currentUser.email, postId: postNum})
@@ -68,6 +68,15 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
       e.preventDefault()
       setComment(e.target.value)
     }
+
+    const handlePostComment = ()=>{
+      setNewComment(comment)
+      firebaseContext.postCommentHandler({postNum, comment})
+      setComment('')
+      // setNewCommentArray([])
+    }
+
+    const handleOpen = () => setOpen(true);
 
     const handleLike = ()=>{
       if (!isLiked){
@@ -92,41 +101,13 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
             </div>
           </div>
           <Card.Img onDoubleClick={handleLike} variant="top" src={imgURL ? imgURL : dpLoader} style={{borderRadius: '4px', maxHeight: '563px', objectFit: 'cover', objectPosition: 'top'}} />
-          <ImageActions like={like} isLiked={isLiked} handleLike={handleLike}/>
+          <ImageActions setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={setOpen} setOpenCommentFromPost={setOpenCommentFromPost} openCommentFromPost={openCommentFromPost} setCommentCount={setCommentCount}  newComment={newComment} postNum={postNum} like={like} isLiked={isLiked} handleLike={handleLike} imgURL={imgURL} postDp={postDp} userName={userName} caption={caption} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>
           <Card.Body style={{paddingBottom: '15px', paddingLeft: '0'}}>
             <p style={{fontSize: '14px'}}><span style={{fontWeight: '600'}}>{userName}</span> {caption}</p>
           </Card.Body>
-          <div>
-            <input value={comment} className='comment' type="text" onChange={(e)=>handleComment(e)} placeholder='Add a comment...'/>
-            {comment ? <label style={{marginRight: '6px', fontWeight: '600', fontSize: '14px', color: '#0095f6', cursor: 'pointer'}}>Post</label> : <label style={{marginRight: '6px', fontWeight: '600', fontSize: '14px', color: '#ffffff'}}>Post</label>}
-            <GrEmoji />
-          </div>
-          <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-        <div>
-          <CloseIcon className='closeicon' onClick={handleClose}/>
-          <div className='post-modal'>
-            <div>
-              {firebaseContext.currentUser.email === userEmail && <Button onClick={handleDelete} variant="primary" >Delete post</Button>}
-            </div>
-            {firebaseContext.currentUser.email === firebaseContext.adminEmail && <Button onClick={handleDelete} variant="danger" style={{marginTop: '10px'}}>Admin Delete post</Button>}
-            <Button variant="primary" style={{marginTop: '10px'}}>Repost</Button>
-          </div>
-        </div>
-        </Fade>
-      </Modal>
+          <p onClick={()=>setOpenCommentFromPost(true)} style={{margin: '0', marginBottom: '10px', fontSize: '14px', color: '#8e8e8e', cursor: 'pointer'}}>View all {commentCount} comments</p>
+          <Comment comment={comment} handleComment={handleComment} handlePostComment={handlePostComment} />
+          <PostMenuModal setOpen={setOpen} imageURL={imageURL} postNum={postNum} userEmail={userEmail} open={open} />
         </Card>
       );
 }

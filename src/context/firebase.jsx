@@ -172,6 +172,21 @@ export const FirebaseProvider = (props)=>{
         })
     }
 
+    const postCommentHandler = ({postNum, comment})=>{
+        addDoc(collection(firestore, `posts/${postNum}/comments`),{
+            uid: user.uid,
+            comment,
+            userEmail: currentUser.email,
+            userName: currentUser.uname,
+            commentDate: Date.now()
+        }).then((docRef)=>{
+            // console.log(docRef)
+            // alert(docRef)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+
     const deleteLikeFromFirestore = async({postNum, likeId})=>{
         await deleteDoc(doc(firestore, `posts/${postNum}/likes`, likeId))
         console.log('done')
@@ -201,6 +216,10 @@ export const FirebaseProvider = (props)=>{
 
     const fetchLikes = (docId)=>{
         return getDocs(collection(firestore, `posts/${docId}/likes`))
+    }
+
+    const fetchComments = (docId)=>{
+        return getDocs(collection(firestore, `posts/${docId}/comments`))
     }
 
     const postUploadToFirebase = (caption)=>{
@@ -242,7 +261,7 @@ export const FirebaseProvider = (props)=>{
 
     const isLoggedIn = user ? true : false;
 
-    return <firebaseContext.Provider value={{deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
+    return <firebaseContext.Provider value={{fetchComments, postCommentHandler, deleteLikeFromFirestore, userLikedCheck, fetchLikes, updateLikeInFirestore, adminEmail, deletePost, fetchPostDp, noPost ,setNoPost, fetchPosts, currentUser, postUploadToFirebase, getImage, imageUrl, setImageUrl, uploadImage, user, signInLoginUserPass, isLoggedIn, signUpLoginUserPass, putDataInFirestore, userLogOut, googleAuth}}>
         {props.children}
     </firebaseContext.Provider>
 }

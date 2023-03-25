@@ -8,7 +8,7 @@ const Commenters = ({comm, commentPath}) => {
     const [commentDp, setCommentDp] = useState('./images/default_img.webp')
     const firebaseContext = useFirebase();
     const [open, setOpen] = useState(false)
-    console.log(commentPath)
+    // console.log(commentPath)
     
     useEffect(()=>{
         firebaseContext.fetchPostDp(userEmail)

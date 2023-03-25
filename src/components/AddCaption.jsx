@@ -10,6 +10,7 @@ const AddCaption = ({imageUrl}) => {
   const [imgURL, setImgURL] = useState('')
   const firebaseContext = useFirebase()
   const [caption, setCaption] = useState('')
+  const [isShareSelected, setIsShareSelected] = useState(false)
 
   useEffect(()=>{
     firebaseContext.getImage(imageUrl.ref.fullPath)
@@ -23,6 +24,7 @@ const AddCaption = ({imageUrl}) => {
   }
 
   const handleSubmitPost = ()=>{
+    setIsShareSelected(true)
     firebaseContext.postUploadToFirebase(caption)
   }
 
@@ -31,7 +33,9 @@ const AddCaption = ({imageUrl}) => {
       <div className='create-head-caption'>
           <IoArrowBackOutline size={24}/>
           <p style={{margin: '0', fontWeight: '600'}}>Create new post</p>
-          <p onClick={handleSubmitPost} className='share-btn' >Share</p>
+          {
+            isShareSelected ? <p className='share-btn' style={{opacity: '0.5'}} >Sharing...</p> : <p onClick={handleSubmitPost} className='share-btn' >Share</p>
+          }
       </div>
       <div className='create-mid-caption'>
         <div className='image-container' >

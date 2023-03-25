@@ -25,6 +25,7 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
     // console.log(commentCount)
     const [openCommentFromPost, setOpenCommentFromPost] = useState(false)
     
+    
 
     useEffect(()=>{
       firebaseContext.fetchPostDp(userEmail)

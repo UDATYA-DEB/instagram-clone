@@ -56,6 +56,8 @@ const Login = () => {
                     <Form>
                     <Form.Group controlId="formBasicEmail" style={{width: '268px'}}>
                         <Form.Control onChange={(e)=>handleInput(e)} type="email" name='email' placeholder="Email" style={{margin: '10px 0', borderRadius: '2px', height: '36px', fontSize: '13px'}}/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicEmail" style={{width: '268px'}}>
                         <Form.Control onChange={(e)=>handleInput(e)} type="password" name='pass' placeholder="Password" style={{marginBottom: '10px', borderRadius: '2px', height: '36px', fontSize: '13px'}} />
                     </Form.Group>
                     </Form>

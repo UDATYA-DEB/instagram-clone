@@ -12,7 +12,7 @@ const HomeProfile = () => {
             <div style={{display: 'flex'}}>
                 <img src={firebaseContext.user ? firebaseContext.currentUser.dp ? firebaseContext.currentUser.dp : dpLoader : dpLoader} alt="olga" className="home-profile-dp" />
                 <div style={{marginLeft: '16px'}}>
-                    <p style={{fontSize: '14px', fontWeight: '600'}}>{firebaseContext.currentUser.uname}</p>
+                    <div style={{fontSize: '14px', fontWeight: '600', display: 'flex', alignItems: 'center'}}>{firebaseContext.currentUser.uname}<div>{ <img style={{width: '20px', height: '20px', objectFit: 'cover'}} src="./images/verified-tick.png" alt="tick" />}</div></div>
                     <p style={{fontSize: '14px', color: '#8e8e8e'}}>{firebaseContext.currentUser.fname}</p>
                     {/* {console.log(firebaseContext.currentUser)} */}
                 </div>

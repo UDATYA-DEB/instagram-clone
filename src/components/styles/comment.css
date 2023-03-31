@@ -32,6 +32,8 @@
 }
 
 .post-img-container{
+    /* min-width: 456px;
+    max-width: 683px; */
     width: 683px;
     height: 683px;
     display: flex;
@@ -41,7 +43,7 @@
 }
 
 .comment-container{
-    width: 500px;
+    max-width: 500px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -81,4 +83,17 @@
     padding: 15px;
     padding-bottom: 70px;
     border-bottom: 1px solid #dbdbdb;
+}
+
+.comment{
+    border: none;
+    margin-bottom: 10px;
+    height: 20px;
+    font-size: 14px;
+    width: 415px;
+    white-space: pre;
+}
+
+.comment:focus{
+    outline: none;
 }

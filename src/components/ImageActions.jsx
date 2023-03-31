@@ -6,7 +6,7 @@ import { FiSend } from 'react-icons/fi'
 import { AiFillHeart } from 'react-icons/ai'
 import CommentModal from './CommentModal'
 
-const ImageActions = ({setNewCommentArray, newCommentArray, menuOpener, setOpenCommentFromPost, openCommentFromPost, setCommentCount, newComment, postNum, isLiked, like, handleLike, imgURL, postDp, userName, caption, comment, handleComment, handlePostComment}) => {
+const ImageActions = ({isEdited, setNewCommentArray, newCommentArray, menuOpener, setOpenCommentFromPost, openCommentFromPost, setCommentCount, newComment, postNum, isLiked, like, handleLike, imgURL, postDp, userName, caption, comment, handleComment, handlePostComment}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
 
@@ -37,7 +37,7 @@ const ImageActions = ({setNewCommentArray, newCommentArray, menuOpener, setOpenC
         </div>
         {like === 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} like</p>}
         {like > 1 && <p style={{padding: '0', marginTop: '5px', fontWeight: '600'}}>{like} likes</p>}
-        <CommentModal setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={menuOpener} setOpenCommentFromPost={setOpenCommentFromPost} setCommentCount={setCommentCount} newComment={newComment} postNum={postNum} open={open} setOpen={setOpen} imgURL={imgURL} postDp={postDp} userName={userName} caption={caption} isLiked={isLiked} handleLike={handleLike} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>
+        <CommentModal isEdited={isEdited} setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={menuOpener} setOpenCommentFromPost={setOpenCommentFromPost} setCommentCount={setCommentCount} newComment={newComment} postNum={postNum} open={open} setOpen={setOpen} imgURL={imgURL} postDp={postDp} userName={userName} caption={caption} isLiked={isLiked} handleLike={handleLike} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>
     </div>
   )
 }

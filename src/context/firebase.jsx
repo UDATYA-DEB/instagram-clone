@@ -8,7 +8,7 @@ import { getAuth,
         signInWithPopup, 
         signInWithEmailAndPassword,
         getAdditionalUserInfo } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 
@@ -47,6 +47,7 @@ export const useFirebase = ()=>{
 export const FirebaseProvider = (props)=>{
     const [user, setUser] = useState(null)
     const [imageUrl, setImageUrl] = useState('')
+    // const [videoUrl, setVideoUrl] = useState('')
     const [currentUser, setCurrentUser] = useState({uname: '', email: '', dp: ''})
     const [noPost, setNoPost] = useState(0)
 
@@ -212,7 +213,9 @@ export const FirebaseProvider = (props)=>{
             uid: user.uid,
             userEmail: currentUser.email,
             userName: currentUser.uname,
-            uploadDate: Date.now()
+            uploadDate: Date.now(),
+            isEdited: false,
+            isVerified: false
         }).then((docRef)=>{
             window.location.reload()
         }).catch((err)=>{
@@ -233,11 +236,27 @@ export const FirebaseProvider = (props)=>{
         
     }
 
+    const [captionUpdated, setCaptionUpdated] = useState(false)
+
+    const updateCaption = async({postId, caption})=>{
+        const docRef = doc(firestore, 'posts', postId);
+        console.log(postId)
+        await updateDoc(docRef, {
+            caption: caption,
+            uploadDate: Date.now(),
+            isEdited: true
+        })
+        setCaptionUpdated(true)
+        window.location.reload()
+    }
+
 
     const isLoggedIn = user ? true : false;
 
     return <firebaseContext.Provider value={
-        {deleteCommentFromFirestore, 
+        {captionUpdated,
+        updateCaption,
+        deleteCommentFromFirestore, 
         fetchComments, 
         postCommentHandler, 
         deleteLikeFromFirestore, 

@@ -7,8 +7,11 @@ import { useFirebase } from '../context/firebase';
 
 const UploadPost = () => {
     const [image, setImage] = useState('')
+    // const [video, setVideo] = useState('')
     const firebaseContext = useFirebase()
     const [isImageSelected, setIsImageSelected] = useState(false)
+    // const [isVideoSelected, setIsVideoSelected] = useState(false)
+    // console.log(video)
 
     useEffect(()=>{
         if (image){
@@ -17,14 +20,29 @@ const UploadPost = () => {
         }
     }, [image])
 
+    // useEffect(()=>{
+    //     if (video){
+    //         uploadVideo()
+    //     }
+    // },[video])
+
     const uploadImage = async()=>{
         await firebaseContext.uploadImage(image)
     }
+
+    // const uploadVideo = async()=>{
+        
+    // }
 
     const handleInputImage = ()=>{
         const realFileBtn = document.getElementById('real-uploader')
         realFileBtn.click();
     }
+
+    // const handleInputVideo = ()=>{
+    //     setIsVideoSelected(true)
+    //     setVideo(prompt('Enter link'))
+    // }
 
     const handleInput = (e)=>{
         e.preventDefault()
@@ -41,6 +59,9 @@ const UploadPost = () => {
             {
                 isImageSelected ? <Button variant="primary" style={{fontWeight: '600', fontSize: '14px', height: '32px', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: '0.6', cursor: 'default'}}>Uploading</Button> : <Button onClick={handleInputImage} variant="primary" style={{fontWeight: '600', fontSize: '14px', height: '32px', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Select from computer</Button>
             }
+            {/* {
+                isVideoSelected ? <Button variant="primary" style={{marginTop: '10px', fontWeight: '600', fontSize: '14px', height: '32px', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: '0.6', cursor: 'default'}}>Uploading</Button> : <Button onClick={handleInputVideo} variant="primary" style={{marginTop: '10px', fontWeight: '600', fontSize: '14px', height: '32px', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Upload Video</Button>
+            }    */}
             <input type='file' name='picture' id="real-uploader" hidden='hidden' onChange={(e)=>handleInput(e)}/>
         </div>
     </div> 

@@ -7,12 +7,13 @@ import ImageActions from './ImageActions';
 import Comment from './Comment';
 import PostMenuModal from './PostMenuModal';
 
-const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
+const PostCard = ({caption, imageURL, userEmail, userName, postNum, isEdited, isVerified}) => {
   // console.log(imageURL)
   
     const firebaseContext = useFirebase();
     const [imgURL, setImgURL] = useState('')
     const [postDp, setPostDp] = useState('')
+    const [postCaption, setPostCaption] = useState(caption)
     const dpLoader = './images/default_img.webp'
     const [comment, setComment] = useState('')
     const [like, setLike] = useState(0)
@@ -95,20 +96,20 @@ const PostCard = ({caption, imageURL, userEmail, userName, postNum}) => {
           <div style={{margin: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
               <img className='dp' src={postDp ? postDp : dpLoader} alt={'user'} />
-              <p style={{margin: '0', marginLeft: '10px'}}>{userName}</p>
+              <div style={{margin: '0', marginLeft: '10px', display: 'flex', alignItems: 'center'}}>{userName}<div>{ <img style={{width: '20px', height: '20px', objectFit: 'cover'}} src="./images/verified-tick.png" alt="tick" />}</div></div>
             </div>
             <div onClick={handleOpen}>
               <img src="./images/meatball-menu.webp" alt="menu" style={{objectFit: 'cover', height: '20px', width: '20px', cursor: 'pointer'}}/>
             </div>
           </div>
           <Card.Img onDoubleClick={handleLike} variant="top" src={imgURL ? imgURL : dpLoader} style={{borderRadius: '4px', maxHeight: '563px', objectFit: 'cover', objectPosition: 'top'}} />
-          <ImageActions setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={setOpen} setOpenCommentFromPost={setOpenCommentFromPost} openCommentFromPost={openCommentFromPost} setCommentCount={setCommentCount}  newComment={newComment} postNum={postNum} like={like} isLiked={isLiked} handleLike={handleLike} imgURL={imgURL} postDp={postDp} userName={userName} caption={caption} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>
+          <ImageActions isEdited={isEdited} setNewCommentArray={setNewCommentArray} newCommentArray={newCommentArray} menuOpener={setOpen} setOpenCommentFromPost={setOpenCommentFromPost} openCommentFromPost={openCommentFromPost} setCommentCount={setCommentCount}  newComment={newComment} postNum={postNum} like={like} isLiked={isLiked} handleLike={handleLike} imgURL={imgURL} postDp={postDp} userName={userName} caption={postCaption} comment={comment} handleComment={handleComment} handlePostComment={handlePostComment}/>
           <Card.Body style={{paddingBottom: '15px', paddingLeft: '0'}}>
-            <p style={{fontSize: '14px'}}><span style={{fontWeight: '600'}}>{userName}</span> {caption}</p>
+            <p style={{fontSize: '14px'}}><span style={{fontWeight: '600'}}>{userName}</span> {postCaption}</p>
           </Card.Body>
           <p onClick={()=>setOpenCommentFromPost(true)} style={{margin: '0', marginBottom: '10px', fontSize: '14px', color: '#8e8e8e', cursor: 'pointer'}}>View all {commentCount} comments</p>
           <Comment comment={comment} handleComment={handleComment} handlePostComment={handlePostComment} />
-          <PostMenuModal setOpen={setOpen} imageURL={imageURL} postNum={postNum} userEmail={userEmail} open={open} />
+          <PostMenuModal imgURL={imgURL} setPostCaption={setPostCaption} caption={postCaption} setOpen={setOpen} imageURL={imageURL} postNum={postNum} userEmail={userEmail} open={open} />
         </Card>
       );
 }

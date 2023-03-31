@@ -9,12 +9,12 @@ import { FiSend } from 'react-icons/fi'
 import { AiFillHeart } from 'react-icons/ai'
 import Comment from './Comment';
 // import CloseIcon from '@mui/icons-material/Close';
-import { IoArrowBackOutline } from 'react-icons/io5'
+// import { IoArrowBackOutline } from 'react-icons/io5'
 import './styles/comment.css'
 import Commenters from './Commenters';
 import { useFirebase } from '../context/firebase';
 
-const CommentModal = ({isEdited, setNewCommentArray, newCommentArray, menuOpener, setOpenCommentFromPost, setCommentCount, newComment, postNum, open, setOpen, imgURL, postDp, userName, caption, isLiked, handleLike, comment, handleComment, handlePostComment}) => {
+const UpdateCommentModal = ({setNewCommentArray, newCommentArray, menuOpener, setOpenCommentFromPost, setCommentCount, newComment, postNum, open, setOpen, imgURL, postDp, userName, caption, isLiked, handleLike, comment, handleComment, handlePostComment}) => {
     
     const firebaseContext = useFirebase();
     const [comments, setComments] = useState([])
@@ -86,7 +86,7 @@ const CommentModal = ({isEdited, setNewCommentArray, newCommentArray, menuOpener
                     <div className="top-container">
                         <div className='dp-uname-container'>
                             <img className='dp' src={postDp} alt="dp" />
-                            <div style={{margin: '0', padding: '0', marginLeft: '16px', fontWeight: '600', display: 'flex', alignItems: 'center'}}>{userName}<div>{ <img style={{width: '20px', height: '20px', objectFit: 'cover'}} src="./images/verified-tick.png" alt="tick" />}</div>{isEdited && <span style={{color: '#8e8e8e', fontWeight: '500', fontSize: '12px', marginTop: '2px'}}> • Edited •</span>}</div>
+                            <p style={{margin: '0', padding: '0', marginLeft: '16px', fontWeight: '600'}}>{userName}</p>
                         </div>
                         <div onClick={()=>menuOpener(true)}>
                             <img src="./images/meatball-menu.webp" alt="menu" style={{objectFit: 'cover', height: '20px', width: '20px', cursor: 'pointer'}}/>
@@ -131,4 +131,4 @@ const CommentModal = ({isEdited, setNewCommentArray, newCommentArray, menuOpener
   )
 }
 
-export default CommentModal
+export default UpdateCommentModal

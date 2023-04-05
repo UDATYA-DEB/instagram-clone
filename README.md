@@ -57,7 +57,7 @@ This project was made using ReactJS for frontend and Firebase working in the bac
 
 ##
 
-4. Double Tapping to like the comment :-
+4. Double Tapping to like the post :-
 
 ![like](https://user-images.githubusercontent.com/74970338/230189867-87403e88-f672-4ca5-94f9-b4b72db68bc0.gif)
 

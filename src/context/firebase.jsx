@@ -15,15 +15,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'fire
 const firebaseContext = createContext(null);
 const adminEmail = "udatya.developer@gmail.com"
 
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDWcOmSGhs7rjRh1u0nkjfnF4Iwd07kX0E",
-//     authDomain: "instagram-87c95.firebaseapp.com",
-//     projectId: "instagram-87c95",
-//     storageBucket: "instagram-87c95.appspot.com",
-//     messagingSenderId: "864345540422",
-//     appId: "1:864345540422:web:0006de6d8ccb6378878747"
-// }; // insta-for-me
-
 const firebaseConfig = {
     apiKey: "AIzaSyC9K6IqaXISk7EJ8xsEvVr99_viiEi--Lg",
     authDomain: "instagram-beta-f4791.firebaseapp.com",

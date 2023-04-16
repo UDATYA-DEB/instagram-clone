@@ -67,7 +67,7 @@ const Sidebar = () => {
                     <label>Profile</label>
                 </div>
             </div>
-            <div className='menu-items' onClick={()=>navigate('#')}>
+            <div onClick={()=>alert('Nothing more to see for now...')} className='menu-items' onClick={()=>navigate('#')}>
                 <CiMenuBurger size={25}/>
                 <label>More</label>
             </div>

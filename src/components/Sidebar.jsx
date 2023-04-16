@@ -38,26 +38,26 @@ const Sidebar = () => {
                     <MdHomeFilled className='icon' size={30}/>
                     <label style={{fontWeight: '700'}}>Home</label>
                 </Link>
-                <Link to={'/'} style={{color: 'black'}} className='menu-items'>
+                <div onClick={()=>alert('Will be available soon...')} to={'/'} style={{color: 'black'}} className='menu-items'>
                     <FiSearch className='menu-icon' size={30}/>
                     <label>Search</label>
-                </Link>
-                <Link to={'/'} style={{color: 'black'}} className='menu-items'>
+                </div>
+                <div onClick={()=>alert('Will be available soon...')} to={'/'} style={{color: 'black'}} className='menu-items'>
                     <MdOutlineExplore className='menu-icon' size={30}/>
                     <label>Explore</label>
-                </Link>
-                <Link to={'/'} style={{color: 'black'}} className='menu-items'>
+                </div>
+                <div onClick={()=>alert('Will be available soon...')} to={'/'} style={{color: 'black'}} className='menu-items'>
                     <GrMultimedia className='menu-icon' size={30}/>
                     <label>Reels</label>
-                </Link>
-                <Link to={'/'} style={{color: 'black'}} className='menu-items'>
+                </div>
+                <div onClick={()=>alert('Will be available soon...')} to={'/'} style={{color: 'black'}} className='menu-items'>
                     <RiMessengerLine className='menu-icon' size={30}/>
                     <label>Messages</label>
-                </Link>
-                <Link to={'/'} style={{color: 'black'}} className='menu-items'>
+                </div>
+                <div onClick={()=>alert('Will be available soon...')} to={'/'} style={{color: 'black'}} className='menu-items'>
                     <AiOutlineHeart className='menu-icon' size={30}/>
                     <label>Notification</label>
-                </Link>
+                </div>
                 <div className='menu-items' onClick={handleOpen}>
                     <AiOutlinePlusSquare className='menu-icon' size={30}/>
                     <label>Create</label>
